@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
 @Service
 @RequiredArgsConstructor
 public class FriendRequestUseCaseImpl implements FriendRequestUseCase {
-
     private final FriendRequestPort friendRequestPort;
     private final UserRelationUseCase userRelationUseCase;
 
