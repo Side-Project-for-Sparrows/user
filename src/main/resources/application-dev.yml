@@ -44,12 +44,13 @@ TIMEZONE:
 
 search:
   service:
-    url: localhost:8080
+    url: 192.168.0.17:30081
+    #url: localhost:8081
 
-user:
+school:
   service:
-    url: localhost:8080
-
+    #url: 192.168.0.17:30082
+    url: localhost:8081
 kafka:
   aggregateType:
     user: "user"
