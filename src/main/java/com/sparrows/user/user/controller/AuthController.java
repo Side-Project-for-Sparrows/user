@@ -19,14 +19,14 @@ public class AuthController {
     @Autowired
     UserAuthUseCase userAuthUseCase;
 
-    @PostMapping("/api/auth/login")
+    @PostMapping("/user/auth/login")
     public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto) {
         LoginResponseDto response = userAuthUseCase.loginIfValidUser(loginRequestDto);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/api/auth/join")
+    @PostMapping("/user/auth/join")
     public ResponseEntity<RegisterResponseDto> joinUser(@RequestBody RegisterRequestDto registerRequestDto){
         RegisterResponseDto response = userAuthUseCase.registerIfLocationMatches(registerRequestDto);
 
