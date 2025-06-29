@@ -33,7 +33,7 @@ public class UserAuthUseCaseImpl implements UserAuthUseCase {
         validateRegisterRequest(request);
 
         UserEntity savedUser = saveUser(request);
-        userEventPort.publishUserCreatedEvent(savedUser.getId(), request.getSchoolId(), request.getUserType());
+        userEventPort.publishUserCreatedEvent(savedUser.getId(), savedUser.getNickname(), request.getSchoolId(), request.getUserType());
 
         return new RegisterResponseDto(UserInfoDto.fromEntity(savedUser));
     }

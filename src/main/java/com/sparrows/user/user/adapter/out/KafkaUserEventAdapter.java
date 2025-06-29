@@ -21,11 +21,12 @@ public class KafkaUserEventAdapter implements UserEventPort {
     private final OutboxEventRepository outboxEventRepository;
 
     @Transactional
-    public void publishUserCreatedEvent(Long userId, Integer schoolId, UserType userType) {
+    public void publishUserCreatedEvent(Long userId, String nickanme, Integer schoolId, UserType userType) {
         UserCreatedPayload payload = new UserCreatedPayload();
         payload.setSchoolId(schoolId);
         payload.setUserId(userId);
         payload.setUserType(userType);
+        payload.setNickname(nickanme);
 
         OutboxEvent outboxEvent = new OutboxEvent();
         outboxEvent.setAggregateType(kafkaProperties.getAggregateType().getUser());

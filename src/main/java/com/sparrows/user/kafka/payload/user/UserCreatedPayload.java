@@ -8,6 +8,7 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserCreatedPayload{
     public long userId;
+    public String nickname;
     public int schoolId;
     public UserType userType;
 }
