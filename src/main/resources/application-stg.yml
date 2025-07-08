@@ -96,3 +96,7 @@ cache:
       calendar:
         in-memory: 1m
         redis: 2m
+
+token:
+  public-key: {PUBLIC-KEY}
+  private-key: {PRIVATE-KEY}

@@ -9,6 +9,7 @@ import com.sparrows.user.user.port.in.UserAuthUseCase;
 import com.sparrows.user.user.port.out.UserEventPort;
 import com.sparrows.user.user.port.out.SchoolPort;
 import com.sparrows.user.user.port.out.UserDataBasePort;
+import com.sparrows.user.util.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,15 +28,22 @@ public class UserAuthUseCaseImpl implements UserAuthUseCase {
     @Autowired
     private UserEventPort userEventPort;
 
+    @Autowired
+    JwtTokenUtil jwtTokenUtil;
+
     @Override
     @Transactional
     public RegisterResponseDto registerIfLocationMatches(RegisterRequestDto request) {
         validateRegisterRequest(request);
 
         UserEntity savedUser = saveUser(request);
+
+
         userEventPort.publishUserCreatedEvent(savedUser.getId(), savedUser.getNickname(), request.getSchoolId(), request.getUserType());
 
-        return new RegisterResponseDto(UserInfoDto.fromEntity(savedUser));
+        String accessToken = jwtTokenUtil.generateAccessToken(savedUser.getId());
+        String refreshToken = jwtTokenUtil.generateRefreshToken(savedUser.getId());
+        return new RegisterResponseDto(UserInfoDto.fromEntity(savedUser,accessToken,refreshToken));
     }
 
     @Override
@@ -47,7 +55,9 @@ public class UserAuthUseCaseImpl implements UserAuthUseCase {
             throw new InvalidPasswordException();
         }
 
-        return new LoginResponseDto(UserInfoDto.fromEntity(user));
+        String accessToken = jwtTokenUtil.generateAccessToken(user.getId());
+        String refreshToken = jwtTokenUtil.generateRefreshToken(user.getId());
+        return new LoginResponseDto(UserInfoDto.fromEntity(user,accessToken,refreshToken));
     }
 
     private void validateRegisterRequest(RegisterRequestDto request) {
