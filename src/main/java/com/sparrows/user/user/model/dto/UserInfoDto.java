@@ -16,14 +16,18 @@ public class UserInfoDto {
     private String nickname;
     private UserType userType;
     private int point;
+    private String accessToken;
+    private String refreshToken;
 
-    public static UserInfoDto fromEntity(UserEntity user) {
+    public static UserInfoDto fromEntity(UserEntity user, String accessToken, String refreshToken) {
         return new UserInfoDto(
                 user.getId(),
                 user.getLoginId(),
                 user.getNickname(),
                 user.getUserType(),
-                user.getPoint()
+                user.getPoint(),
+                accessToken,
+                refreshToken
         );
     }
 }

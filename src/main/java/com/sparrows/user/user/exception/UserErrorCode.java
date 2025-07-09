@@ -1,5 +1,6 @@
 package com.sparrows.user.user.exception;
 
+import co.elastic.clients.elasticsearch.nodes.Http;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,9 @@ public enum UserErrorCode {
     // Global
     INVALID_REQUEST(HttpStatus.UNPROCESSABLE_ENTITY, "INVALID REQUEST ERROR"),
     INTERNAL_SERVER(HttpStatus.UNPROCESSABLE_ENTITY, "INTERNAL SERVER ERROR"),
+
+    //토큰 만료 에러
+    REFRESH_TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, "REFRESH TOKEN EXPIRED"),
 
     USER_ALREADY_EXIST(HttpStatus.CONFLICT, "User already exists"),
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "User not found"),

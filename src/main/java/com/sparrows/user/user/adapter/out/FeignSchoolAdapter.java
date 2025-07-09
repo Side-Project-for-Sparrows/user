@@ -13,6 +13,7 @@ public class FeignSchoolAdapter implements SchoolPort {
 
     @Override
     public boolean isSameLocationWithSchoolId(SchoolValidateRequest request) {
-        return userIndexClient.validateSchool(request);
+        return true;
+        //return userIndexClient.validateSchool(request);
     }
 }

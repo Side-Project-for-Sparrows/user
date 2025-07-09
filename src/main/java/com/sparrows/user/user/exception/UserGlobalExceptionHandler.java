@@ -31,7 +31,6 @@ public class UserGlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, INTERNAL_SERVER.getStatus());
     }
 
-
     @ExceptionHandler({
             MissingServletRequestPartException.class,
             MissingRequestValueException.class,
