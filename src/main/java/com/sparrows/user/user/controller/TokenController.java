@@ -25,12 +25,4 @@ public class TokenController {
         String result = jwtTokenUtil.getPublicKeyPem();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
-    @GetMapping("/accessToken")
-    public ResponseEntity<String> getAccessToken(@RequestHeader("refreshToken") String refreshToken) {
-        Long userId = jwtTokenUtil.verifyRefreshToken(refreshToken);
-        String accessToken = jwtTokenUtil.generateAccessToken(userId);
-
-        return new ResponseEntity<>(accessToken, HttpStatus.OK);
-    }
 }
