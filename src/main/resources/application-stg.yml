@@ -98,5 +98,5 @@ cache:
         redis: 2m
 
 token:
-  public-key: {PUBLIC-KEY}
-  private-key: {PRIVATE-KEY}
+  public-key: ${PUBLIC-KEY}
+  private-key: ${PRIVATE-KEY}
