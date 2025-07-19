@@ -1,5 +1,6 @@
-package com.sparrows.user.schedule.model.entity;
+package com.sparrows.user.user.model.entity;
 
+import com.sparrows.user.user.model.dto.SubjectRequestDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,4 +33,11 @@ public class SubjectEntity {
 
     @Column(nullable = false)
     private Integer term;
+
+    public void update(SubjectRequestDto request) {
+        this.name = request.getName();
+        this.startTime = request.getStartTime();
+        this.endTime = request.getEndTime();
+        this.term = request.getTerm();
+    }
 }

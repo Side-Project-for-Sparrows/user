@@ -25,7 +25,11 @@ public enum UserErrorCode {
     FRIEND_REQUEST_ALREADY_EXISTS(HttpStatus.CONFLICT, "Duplicate or already accepted friend request."),
     FRIEND_REQUEST_NOT_FOUND(HttpStatus.NOT_FOUND, "No friend request found."),
     USER_RELATION_NOT_FOUND(HttpStatus.NOT_FOUND, "User relation does not exist"),
-    USER_RELATION_ALREADY_EXIST(HttpStatus.CONFLICT, "User relation already exists");
+    USER_RELATION_ALREADY_EXIST(HttpStatus.CONFLICT, "User relation already exists"),
+
+    SUBJECT_NOT_FOUND(HttpStatus.NOT_FOUND, "Subject does not exist"),
+    ACCESS_DENIED(HttpStatus.FORBIDDEN, "Access denied"),
+    INVALID_SUBJECT(HttpStatus.BAD_REQUEST, "Subject time overlap"),;
 
     private final HttpStatus status;
     private final String message;
