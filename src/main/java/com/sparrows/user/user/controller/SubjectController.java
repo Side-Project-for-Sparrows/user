@@ -43,7 +43,10 @@ public class SubjectController {
 
 
     @GetMapping("/list")
-    public ResponseEntity<List<SubjectResponseDto>> getSubjects(@RequestParam Long userId, @RequestParam Integer term) {
-        return ResponseEntity.ok(subjectUseCase.getSubjectsByUserAndTerm(userId, term));
+    public ResponseEntity<List<SubjectResponseDto>> getSubjects(
+            @RequestHeader("X-Requester-Id") Long requesterId,
+            @RequestParam Long userId,
+            @RequestParam Integer term) {
+        return ResponseEntity.ok(subjectUseCase.getSubjectsByUserAndTerm(requesterId, userId, term));
     }
 }

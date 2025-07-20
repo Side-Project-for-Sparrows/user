@@ -9,5 +9,5 @@ public interface SubjectUseCase {
     SubjectResponseDto createSubject(SubjectRequestDto request);
     SubjectResponseDto updateSubject(Long subjectId, Long requesterId, SubjectRequestDto request);
     void deleteSubject(Long subjectId, Long requesterId);
-    List<SubjectResponseDto> getSubjectsByUserAndTerm(Long userId, Integer term);
+    List<SubjectResponseDto> getSubjectsByUserAndTerm(Long requesterId, Long userId, Integer term);
 }

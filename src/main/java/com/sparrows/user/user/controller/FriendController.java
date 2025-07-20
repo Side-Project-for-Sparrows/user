@@ -1,6 +1,7 @@
 package com.sparrows.user.user.controller;
 
 import com.sparrows.user.user.model.dto.FriendNameRequestDto;
+import com.sparrows.user.user.model.dto.FriendResponseDto;
 import com.sparrows.user.user.model.dto.UserRelationRequestDto;
 import com.sparrows.user.user.port.in.FriendRequestUseCase;
 import com.sparrows.user.user.port.in.UserRelationUseCase;
@@ -10,13 +11,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
-@RequestMapping("/friend")
+@RequestMapping("/user/friend")
 @RequiredArgsConstructor
 public class FriendController {
     private final FriendRequestUseCase friendRequestUseCase;
     private final UserRelationUseCase userRelationUseCase;
+
+    @GetMapping("/list")
+    public ResponseEntity<List<FriendResponseDto>> getFriends(@RequestHeader("X-Requester-Id") Long requesterId) {
+        return ResponseEntity.ok(userRelationUseCase.getFriends(requesterId));
+    }
 
     @PostMapping("/request")
     public ResponseEntity<Void> request(@RequestBody UserRelationRequestDto request) {

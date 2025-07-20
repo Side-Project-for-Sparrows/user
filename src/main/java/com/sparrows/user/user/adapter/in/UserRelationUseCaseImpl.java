@@ -2,6 +2,7 @@ package com.sparrows.user.user.adapter.in;
 
 import com.sparrows.user.user.exception.handling.UserRelationAlreadyExistException;
 import com.sparrows.user.user.exception.handling.UserRelationNotFoundException;
+import com.sparrows.user.user.model.dto.FriendResponseDto;
 import com.sparrows.user.user.model.dto.UserRelationRequestDto;
 import com.sparrows.user.user.model.entity.UserRelationEntity;
 import com.sparrows.user.user.port.in.UserRelationUseCase;
@@ -9,11 +10,18 @@ import com.sparrows.user.user.port.out.UserRelationPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class UserRelationUseCaseImpl implements UserRelationUseCase {
 
     private final UserRelationPort userRelationPort;
+
+    @Override
+    public List<FriendResponseDto> getFriends(Long userId) {
+        return userRelationPort.findFriendsByUserId(userId);
+    }
 
     @Override
     public void createUserRelation(UserRelationRequestDto request) {

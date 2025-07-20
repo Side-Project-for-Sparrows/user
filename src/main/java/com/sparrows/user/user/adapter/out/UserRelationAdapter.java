@@ -3,11 +3,14 @@ package com.sparrows.user.user.adapter.out;
 import com.sparrows.user.user.adapter.repository.UserRelationRepository;
 import com.sparrows.user.user.adapter.repository.UserRepository;
 import com.sparrows.user.user.exception.handling.UserNotFoundException;
+import com.sparrows.user.user.model.dto.FriendResponseDto;
 import com.sparrows.user.user.model.entity.UserRelationEntity;
 import com.sparrows.user.user.port.out.UserRelationPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -42,5 +45,13 @@ public class UserRelationAdapter implements UserRelationPort {
         return userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new)
                 .getNickname();
+    }
+
+    @Override
+    public List<FriendResponseDto> findFriendsByUserId(Long userId) {
+        List<UserRelationEntity> relations = userRelationRepository.findAllByUser1(userId);
+        return relations.stream()
+                .map(rel -> new FriendResponseDto(rel.getUser2(), rel.getNickname()))
+                .toList();
     }
 }

@@ -3,11 +3,13 @@ package com.sparrows.user.user.adapter.in;
 import com.sparrows.user.user.exception.handling.AccessDeniedException;
 import com.sparrows.user.user.exception.handling.SubjectNotFoundException;
 import com.sparrows.user.user.exception.handling.SubjectTimeOverlapException;
+import com.sparrows.user.user.exception.handling.UserRelationNotFoundException;
 import com.sparrows.user.user.model.dto.SubjectRequestDto;
 import com.sparrows.user.user.model.dto.SubjectResponseDto;
 import com.sparrows.user.user.model.entity.SubjectEntity;
 import com.sparrows.user.user.port.in.SubjectUseCase;
 import com.sparrows.user.user.port.out.SubjectRepositoryPort;
+import com.sparrows.user.user.port.out.UserRelationPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 public class SubjectUseCaseImpl implements SubjectUseCase {
 
     private final SubjectRepositoryPort subjectRepositoryPort;
+    private final UserRelationPort userRelationPort;
 
     @Override
     public SubjectResponseDto createSubject(SubjectRequestDto request) {
@@ -58,7 +61,12 @@ public class SubjectUseCaseImpl implements SubjectUseCase {
     }
 
     @Override
-    public List<SubjectResponseDto> getSubjectsByUserAndTerm(Long userId, Integer term) {
+    public List<SubjectResponseDto> getSubjectsByUserAndTerm(Long requesterId, Long userId, Integer term) {
+        // 본인이거나, 친구 관계인지 확인
+        if (!requesterId.equals(userId) && !userRelationPort.existsByUsers(requesterId, userId)) {
+            throw new UserRelationNotFoundException();
+        }
+
         return subjectRepositoryPort.findByUserIdAndTerm(userId, term)
                 .stream()
                 .map(SubjectResponseDto::fromEntity)
